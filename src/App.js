@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 function App() {
   const [loading ,setloading]=useState(false);
   const [chars,setchars]=useState([]);
+  const [data,setdata]=useState([]);
   const [open,setopen]=useState(false);
   const [item,setitem]=useState({});
   const [pagecount,setpagecount]=useState(0);
@@ -19,6 +20,7 @@ function App() {
     setloading(false);
     setpagecount(Math.ceil(data.count/10));
     setchars(data.results);
+    setdata(data.results);
   }
   setloading(true);
   func();
@@ -29,6 +31,7 @@ function App() {
     const data=await res.json();
     setloading(false);
     setchars(data.results);
+    setdata(data.results);
   }
   const handleprev=()=>{
     if(currpage>1){
@@ -46,7 +49,7 @@ function App() {
       func(URL);
     }
   }
-
+  
  const handlemodal=(item)=>{
   setopen(true);
   setitem(item);
@@ -57,6 +60,12 @@ function App() {
     <div>
     <div style={{textAlign:'center', background:'cyan'}}>
       <h1>Star Wars</h1>
+    </div>
+    <div>
+      <input type="text" placeholder='Search name...' onChange={(e)=>{
+        setchars(data.filter(item=>item.name.toLowerCase().includes(e.target.value)));
+      }}/>
+      
     </div>
     <div style={{marginTop:'10px'}}>
     <Modaal item={item} open={open} setopen={setopen} />

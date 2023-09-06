@@ -15,7 +15,7 @@ const Modaal = (props) => {
             const data=await res.json();
             setplanet(data);
             setresidents(data.residents.length);
-            console.log('modal api call');
+            // console.log('modal api call');
         }
         func();
     },[props.open,URL])
